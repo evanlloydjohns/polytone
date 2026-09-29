@@ -51,8 +51,8 @@ public abstract class ClientLevelMixin extends Level {
     }
 
 
-    @Inject(method = "addBreakingBlockEffect", at = @At("HEAD"), cancellable = true)
-    public void polytone$addExtraBreakingParticles(BlockPos pos, Direction direction, CallbackInfo ci) {
+    @Inject(method = "addBreakingBlockEffects", at = @At("HEAD"), cancellable = true)
+    public void polytone$addExtraBreakingParticles(BlockPos pos, Direction direction, boolean playSound, CallbackInfo ci) {
         BlockState state = this.getBlockState(pos);
         if (!state.isAir()) {
             boolean cancels = Polytone.BLOCK_MODIFIERS.runTickers(state, (ClientLevel)(Object)this, pos, TickSource.BLOCK_CRACKING);
