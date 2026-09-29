@@ -28,3 +28,18 @@ jobs:
         with:
           name: polytone-26.3-fabric-first-build
           path: fabric/build/libs/*.jar
+      - name: Smoke-launch Fabric client
+        shell: pwsh
+        timeout-minutes: 5
+        continue-on-error: true
+        run: |
+          .\gradlew.bat :fabric:runClient --console=plain --no-daemon *> run-client.log
+          $exitCode = $LASTEXITCODE
+          Get-Content run-client.log -Tail 160
+          exit $exitCode
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: polytone-26.3-fabric-smoke-log
+          path: run-client.log
+          if-no-files-found: ignore
