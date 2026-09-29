@@ -62,12 +62,4 @@ public abstract class ClientLevelMixin extends Level {
         }
     }
 
-    @ModifyExpressionValue(method = "addEnvironmentAttributeLayers", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ARGB;color(III)I"))
-    public int polytone$modifySkyLightSampler(int value) {
-        Integer c = Polytone.COLORS.getSkyFlash();
-        if (c != null) {
-            return c;
-        }
-        return value;
-    }
 }
