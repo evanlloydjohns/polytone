@@ -300,11 +300,11 @@ public class ShadowMapRenderer {
                 depthTextureView, OptionalDouble.empty())) {
             RenderSystem.bindDefaultUniforms(pass);
             pass.setUniform("Projection", lightProjectionBuffer.slice()); // after the defaults, last bind wins
-            pass.bindTexture("Sampler2", mc.gameRenderer.lightmap(),
+            pass.setUniform("Sampler2", mc.gameRenderer.lightmap(),
                     RenderSystem.getSamplerCache().getClampToEdge(FilterMode.LINEAR));
             for (ChunkSectionLayer layer : SHADOW_LAYERS) {
                 pass.setPipeline(layer.pipeline());
-                pass.bindTexture("Sampler0", atlasView, atlasSampler);
+                pass.setUniform("Sampler0", atlasView, atlasSampler);
                 for (var draws : drawsPerLayer.get(layer).values()) {
                     if (draws.isEmpty()) continue;
                     pass.drawMultipleIndexed(draws, sharedIndexBuffer, sharedIndexType, List.of("ChunkSection"), slices);

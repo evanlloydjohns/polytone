@@ -50,12 +50,8 @@ public final class GpuParticles {
         if (active.isEmpty()) return;
 
         FramePass pass = builder.addPass("polytone_gpu_particles");
-        if (targets.particles != null) {
-            targets.particles = pass.readsAndWrites(targets.particles);
-        } else {
-            targets.main = pass.readsAndWrites(targets.main);
-        }
-        ResourceHandle<RenderTarget> handle = targets.particles != null ? targets.particles : targets.main;
+        targets.main = pass.readsAndWrites(targets.main);
+        ResourceHandle<RenderTarget> handle = targets.main;
         pass.executes(() -> {
             RenderSystem.setShaderFog(shaderFog);
             render(handle.get(), cameraPos, gameTime, partialTick);

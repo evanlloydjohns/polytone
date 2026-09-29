@@ -147,7 +147,7 @@ public final class GpuParticleRenderer implements ICustomParticleFactory, AutoCl
                         .withDepthStencilState(DepthStencilState.DEFAULT);
             }
             pipeline = builder.build();
-            if (!RenderSystem.getDevice().precompilePipeline(pipeline, null).isValid()) {
+            if (RenderSystem.getCompiledPipelineNullable(pipeline) == null) {
                 Polytone.LOGGER.error("Failed to compile shader {} for gpu particle {}", type.shader(), id);
                 shaderFailed = true;
                 pipeline = null;
@@ -216,10 +216,10 @@ public final class GpuParticleRenderer implements ICustomParticleFactory, AutoCl
         GpuBuffer vertices = records.vertexBuffer();
         if (pipeline == null || vertices == null || texture == null || heightmap == null) return;
 
-        pass.setPipeline(pipeline);
-        pass.bindTexture("Sampler0", texture, RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
-        pass.bindTexture("Sampler1", heightmap.textureView(), RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
-        pass.bindTexture("Sampler2", Minecraft.getInstance().gameRenderer.lightmap(),
+        pass.setPipeline(RenderSystem.getCompiledPipeline(pipeline));
+        pass.setUniform("Sampler0", texture, RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
+        pass.setUniform("Sampler1", heightmap.textureView(), RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
+        pass.setUniform("Sampler2", Minecraft.getInstance().gameRenderer.lightmap(),
                 RenderSystem.getSamplerCache().getClampToEdge(FilterMode.LINEAR));
         pass.setUniform("ParticleInfo", infoUbo);
         customUniforms.bind(pass, type.uniforms().keySet());
