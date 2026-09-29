@@ -1,9 +1,9 @@
 package net.mehvahdjukaar.polytone.content.shaders;
 
-import com.mojang.blaze3d.opengl.GlRenderPipeline;
-import com.mojang.blaze3d.systems.RenderPassBackend;
+import com.mojang.renderpearl.backend.opengl.GlRenderPipeline;
+import com.mojang.renderpearl.backend.api.RenderPassBackend;
 import com.mojang.blaze3d.vulkan.VulkanBindGroupLayout;
-import com.mojang.blaze3d.vulkan.VulkanRenderPipeline;
+import com.mojang.renderpearl.backend.vulkan.VulkanRenderPipeline;
 import net.mehvahdjukaar.polytone.mixins.accessor.GlRenderPassAccessor;
 import net.mehvahdjukaar.polytone.mixins.accessor.VulkanRenderPassAccessor;
 import org.jetbrains.annotations.Nullable;

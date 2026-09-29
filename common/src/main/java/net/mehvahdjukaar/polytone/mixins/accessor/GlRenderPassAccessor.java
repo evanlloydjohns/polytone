@@ -1,6 +1,6 @@
 package net.mehvahdjukaar.polytone.mixins.accessor;
 
-import com.mojang.blaze3d.opengl.GlRenderPipeline;
+import com.mojang.renderpearl.backend.opengl.GlRenderPipeline;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

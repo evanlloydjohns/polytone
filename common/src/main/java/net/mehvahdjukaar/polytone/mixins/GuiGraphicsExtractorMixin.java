@@ -1,6 +1,6 @@
 package net.mehvahdjukaar.polytone.mixins;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import net.mehvahdjukaar.polytone.Polytone;
 import net.mehvahdjukaar.polytone.content.slotify.GuiDepthTarget;
 import net.mehvahdjukaar.polytone.content.slotify.GuiDepthTargetAware;

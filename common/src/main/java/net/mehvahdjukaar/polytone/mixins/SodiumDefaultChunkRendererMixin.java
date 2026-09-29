@@ -1,7 +1,7 @@
 package net.mehvahdjukaar.polytone.mixins;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import net.caffeinemc.mods.sodium.client.render.chunk.DefaultChunkRenderer;
 import net.mehvahdjukaar.polytone.content.shaders.sodium.SodiumShadowRenderer;
 import org.spongepowered.asm.mixin.Mixin;

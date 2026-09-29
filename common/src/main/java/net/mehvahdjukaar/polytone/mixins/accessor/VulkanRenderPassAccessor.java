@@ -1,7 +1,7 @@
 package net.mehvahdjukaar.polytone.mixins.accessor;
 
-import com.mojang.blaze3d.vulkan.VulkanRenderPass;
-import com.mojang.blaze3d.vulkan.VulkanRenderPipeline;
+import com.mojang.renderpearl.backend.vulkan.VulkanRenderPass;
+import com.mojang.renderpearl.backend.vulkan.VulkanRenderPipeline;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

@@ -1,7 +1,7 @@
 package net.mehvahdjukaar.polytone.mixins;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import net.mehvahdjukaar.polytone.Polytone;
 import net.minecraft.client.gui.render.TextureSetup;
 import org.spongepowered.asm.mixin.Mixin;

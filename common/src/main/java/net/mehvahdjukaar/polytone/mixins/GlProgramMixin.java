@@ -1,9 +1,9 @@
 package net.mehvahdjukaar.polytone.mixins;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.mojang.blaze3d.opengl.GlProgram;
-import com.mojang.blaze3d.opengl.Uniform;
-import com.mojang.blaze3d.pipeline.BindGroupLayout;
+import com.mojang.renderpearl.backend.opengl.GlProgram;
+import com.mojang.renderpearl.backend.opengl.Uniform;
+import com.mojang.renderpearl.api.pipeline.BindGroupLayout;
 import net.mehvahdjukaar.polytone.content.shaders.PolytoneBuiltInUniformsSet;
 import net.mehvahdjukaar.polytone.content.shaders.PostChainsManager;
 import org.lwjgl.opengl.GL20C;
