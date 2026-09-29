@@ -22,6 +22,11 @@ try {
     Pop-Location
 }
 
+# CodecUI 26.2 still links the removed RegistryCodecs owner/method. Retarget
+# its two calls to the equivalent 26.3 holder-set codec before bundling it.
+python '.github/scripts/patch-codecui-26.3.py' 'work/vendor/META-INF/jars/codecui-fabric-26.2-1.4.5.jar'
+if ($LASTEXITCODE -ne 0) { throw 'CodecUI 26.3 compatibility patch failed' }
+
 Copy-Item 'work/vendor/META-INF/jars/codecui-fabric-26.2-1.4.5.jar' 'common/mods/codecui-common-26.2-1.4.5.jar'
 Copy-Item 'work/vendor/META-INF/jars/codecui-fabric-26.2-1.4.5.jar' 'fabric/mods/codecui-fabric-26.2-1.4.5.jar'
 Copy-Item 'work/vendor/nautilus_studio-fabric-26.2-1.11.0.jar' 'common/mods/nautilus_studio-common-26.2-1.11.0.jar'
