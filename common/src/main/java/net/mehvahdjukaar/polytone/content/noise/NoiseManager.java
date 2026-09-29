@@ -12,20 +12,20 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
+import net.mehvahdjukaar.polytone.content.noise.LegacyPerlinSimplexNoise;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
-public class NoiseManager extends ContentManager<PerlinSimplexNoise> {
+public class NoiseManager extends ContentManager<LegacyPerlinSimplexNoise> {
 
-    public static final SchemaCodec<PerlinSimplexNoise> NOISE_CODEC = SchemaRecord.create(PerlinSimplexNoise.class, i -> i.group(
+    public static final SchemaCodec<LegacyPerlinSimplexNoise> NOISE_CODEC = SchemaRecord.create(LegacyPerlinSimplexNoise.class, i -> i.group(
             i.field("seed", Codec.INT, p -> 0),
             i.field("octaves", Codec.INT.listOf(), p -> List.of())
-    ).apply(i, (s, l) -> new PerlinSimplexNoise(RandomSource.create(s), l)));
+    ).apply(i, (s, l) -> new LegacyPerlinSimplexNoise(RandomSource.create(s), l)));
 
-    public static final PerlinSimplexNoise DEFAULT =  new PerlinSimplexNoise(RandomSource.create(0), List.of(1));
+    public static final LegacyPerlinSimplexNoise DEFAULT =  new LegacyPerlinSimplexNoise(RandomSource.create(0), List.of(1));
 
 
     public NoiseManager() {
@@ -34,10 +34,10 @@ public class NoiseManager extends ContentManager<PerlinSimplexNoise> {
                 .folders("noises"));
     }
 
-    private final MapRegistry<PerlinSimplexNoise> noises = new MapRegistry<>("Polytone Simplex Noises");
+    private final MapRegistry<LegacyPerlinSimplexNoise> noises = new MapRegistry<>("Polytone Simplex Noises");
 
     @Nullable
-    public PerlinSimplexNoise getNoise(String id) {
+    public LegacyPerlinSimplexNoise getNoise(String id) {
         return noises.getValue(id);
     }
 
@@ -53,7 +53,7 @@ public class NoiseManager extends ContentManager<PerlinSimplexNoise> {
         for (var e : jsons.entrySet()) {
             var id = e.getKey();
             var json = e.getValue();
-            PerlinSimplexNoise noise = decodeStrict(json, id, ops);
+            LegacyPerlinSimplexNoise noise = decodeStrict(json, id, ops);
             noises.register(id, noise);
         }
         ExpressionUtils.regenNoiseFunctions(noises.getEntries());

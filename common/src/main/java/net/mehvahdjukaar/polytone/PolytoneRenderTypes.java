@@ -20,7 +20,6 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.rendertype.OutputTarget;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -48,7 +47,7 @@ public class PolytoneRenderTypes {
     public static final RenderPipeline ADDITIVE_TRANSLUCENT_PARTICLE_PIPELINE = register(
             RenderPipeline.builder()
                     .withBindGroupLayout(BindGroupLayouts.GLOBALS)
-                    .withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+                    .withBindGroupLayout(BindGroupLayouts.PROJECTION)
                     .withBindGroupLayout(BindGroupLayouts.FOG)
                     .withVertexShader("core/particle")
                     .withFragmentShader(Polytone.res("core/particle_no_cutoff"))
@@ -65,7 +64,7 @@ public class PolytoneRenderTypes {
                     .withBindGroupLayout(BindGroupLayouts.GLOBALS)
                     .withBindGroupLayout(BindGroupLayouts.FOG)
                     .withBindGroupLayout(BindGroupLayouts.SAMPLER0_SAMPLER2)
-                    .withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+                    .withBindGroupLayout(BindGroupLayouts.PROJECTION)
                     .withVertexShader("core/block")
                     .withFragmentShader("core/block")
                     .withVertexBinding(0, DefaultVertexFormat.BLOCK)
@@ -80,7 +79,6 @@ public class PolytoneRenderTypes {
                     .useLightmap()
                     .withTexture("Sampler0", TextureAtlas.LOCATION_BLOCKS,
                             () -> RenderSystem.getSamplerCache().getSampler(AddressMode.CLAMP_TO_EDGE, AddressMode.CLAMP_TO_EDGE, FilterMode.LINEAR, FilterMode.NEAREST, true))
-                    .setOutputTarget(OutputTarget.ITEM_ENTITY_TARGET)
                     .setOutline(RenderSetup.OutlineProperty.AFFECTS_OUTLINE)
                     .createRenderSetup());
 
@@ -98,7 +96,7 @@ public class PolytoneRenderTypes {
     public static final RenderPipeline LEASH_PIPELINE = register(
             RenderPipeline.builder()
                     .withBindGroupLayout(BindGroupLayouts.GLOBALS)
-                    .withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+                    .withBindGroupLayout(BindGroupLayouts.PROJECTION)
                     .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
                     .withBindGroupLayout(BindGroupLayouts.FOG)
                     .withBindGroupLayout(BindGroupLayouts.SAMPLER2)

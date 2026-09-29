@@ -1,5 +1,6 @@
 package net.mehvahdjukaar.polytone.content.config;
 
+import com.mojang.blaze3d.Blaze3D;
 import net.mehvahdjukaar.polytone.Polytone;
 import net.mehvahdjukaar.polytone.compat.nautilus.PolytoneNautilus;
 import net.minecraft.client.Minecraft;
@@ -12,7 +13,8 @@ import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Util;
+
+import java.net.URI;
 
 final class EditorButton extends Button {
 
@@ -48,9 +50,9 @@ final class EditorButton extends Button {
         Minecraft mc = Minecraft.getInstance();
         Screen parent = mc.gui.screen();
         mc.gui.setScreen(new ConfirmLinkScreen(confirmed -> {
-            if (confirmed) Util.getPlatform().openUri(NAUTILUS_URL);
+            if (confirmed) Blaze3D.openUri(URI.create(NAUTILUS_URL));
             mc.gui.setScreen(parent);
-        }, NAUTILUS_URL, true));
+        }, URI.create(NAUTILUS_URL), true));
     }
 
     private void open() {
