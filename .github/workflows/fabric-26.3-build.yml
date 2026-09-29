@@ -18,6 +18,9 @@ jobs:
           distribution: temurin
           java-version: '25'
       - uses: gradle/actions/setup-gradle@v4
+      - name: Bootstrap published 26.2 libraries for the first port build
+        shell: pwsh
+        run: .github/scripts/bootstrap-26.2-deps.ps1
       - name: Build Fabric JAR
         run: .\gradlew.bat :fabric:build --console=plain --no-daemon
       - uses: actions/upload-artifact@v4
