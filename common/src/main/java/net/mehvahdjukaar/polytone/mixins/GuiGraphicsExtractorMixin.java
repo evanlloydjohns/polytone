@@ -26,10 +26,10 @@ public abstract class GuiGraphicsExtractorMixin implements GuiDepthTargetAware {
     @Shadow
     protected abstract void innerBlit(RenderPipeline renderPipeline, Identifier location, int x0, int x1, int y0, int y1, float u0, float u1, float v0, float v1, int color);
 
-    @Inject(method = "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIIII)V",
+    @Inject(method = "blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIIII)V",
             at = @At(value = "INVOKE",
                     shift = At.Shift.BEFORE,
-                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;innerBlit(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIFFFFI)V"), cancellable = true)
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;innerBlit(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIFFFFI)V"), cancellable = true)
     public void polytone$modifyBlit(RenderPipeline pipeline, TextureAtlasSprite sprite,
                                     int x, int y, int width, int height, int color, CallbackInfo ci) {
         if (Polytone.OVERLAY_MODIFIERS.maybeModifyBlit((GuiGraphicsExtractor) (Object) this, pipeline,
@@ -39,10 +39,10 @@ public abstract class GuiGraphicsExtractorMixin implements GuiDepthTargetAware {
     }
 
     //cut blit
-    @Inject(method = "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIIIIIIII)V",
+    @Inject(method = "blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIIIIIIII)V",
             at = @At(value = "INVOKE",
                     shift = At.Shift.BEFORE,
-                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;innerBlit(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIFFFFI)V"), cancellable = true)
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;innerBlit(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIFFFFI)V"), cancellable = true)
     public void polytone$modifyBlit(RenderPipeline pipeline, TextureAtlasSprite sprite, int textureWidth, int textureHeight, int uPosition, int vPosition,
                                     int x, int y, int uWidth, int vHeight, int color, CallbackInfo ci) {
         if (Polytone.OVERLAY_MODIFIERS.maybeModifyBlit((GuiGraphicsExtractor) (Object) this, pipeline,

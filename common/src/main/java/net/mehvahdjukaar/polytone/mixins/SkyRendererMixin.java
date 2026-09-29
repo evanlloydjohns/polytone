@@ -16,7 +16,7 @@ public class SkyRendererMixin {
 
     @ModifyExpressionValue(method = "renderSkyDisc",
             at = @At(value = "FIELD",
-                    target = "Lnet/minecraft/client/renderer/RenderPipelines;SKY:Lcom/mojang/blaze3d/pipeline/RenderPipeline;"))
+                    target = "Lnet/minecraft/client/renderer/RenderPipelines;SKY:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;"))
     private RenderPipeline polytone$skyDepthWrite(RenderPipeline original) {
         if (Polytone.CONFIGS.skyDepthWrite.get()) {
             return PolytoneRenderTypes.SKY_DEPTH_WRITE_PIPELINE;

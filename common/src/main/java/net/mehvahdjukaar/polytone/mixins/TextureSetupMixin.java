@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(TextureSetup.class)
 public class TextureSetupMixin {
 
-    @ModifyExpressionValue(method = "singleTextureWithLightmap", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;lightmap()Lcom/mojang/blaze3d/textures/GpuTextureView;"))
+    @ModifyExpressionValue(method = "singleTextureWithLightmap", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;lightmap()Lcom/mojang/renderpearl/api/textures/GpuTextureView;"))
     private static GpuTextureView polytone$onGetGuiLightTexture(GpuTextureView original) {
         if (Polytone.LIGHTMAPS.isGui()) {
             return Polytone.LIGHTMAPS.getGuiLightTexture().getTextureView();
