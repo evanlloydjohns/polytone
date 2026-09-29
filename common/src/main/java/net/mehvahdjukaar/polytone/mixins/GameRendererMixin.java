@@ -41,27 +41,4 @@ public abstract class GameRendererMixin {
         if (preview != null) cir.setReturnValue(preview);
     }
 
-    @Inject(method = "close", at = @At(value = "TAIL"))
-    private void polytone$closeShaderStuff(CallbackInfo ci) {
-        Polytone.POST_CHAINS.onClose();
-        Polytone.SHADER_EFFECTS.onClose();
-        Polytone.SHADOWS.renderer().close();
-    }
-
-    // post_chains_after_hand: save the world depth right before vanilla clears it to draw the hand...
-    @Inject(method = "renderLevel", at = @At(value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/systems/CommandEncoder;clearDepthTexture(Lcom/mojang/blaze3d/textures/GpuTexture;D)V"))
-    private void polytone$snapshotWorldDepth(DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (!Polytone.CONFIGS.postChainsAfterHand.get()) return;
-        Polytone.POST_CHAINS.snapshotWorldDepth(Minecraft.getInstance().gameRenderer.mainRenderTarget());
-    }
-
-    // ...then run the chains after the hand, so held items occlude depth effects like godrays
-    @Inject(method = "render", at = @At(value = "INVOKE", shift = At.Shift.AFTER,
-            target = "Lnet/minecraft/client/renderer/GameRenderer;renderLevel(Lnet/minecraft/client/DeltaTracker;)V"))
-    private void polytone$runPostChainsAfterHand(DeltaTracker deltaTracker, boolean bl, CallbackInfo ci) {
-        if (!Polytone.CONFIGS.postChainsAfterHand.get()) return;
-        Polytone.POST_CHAINS.runChainsAfterHand(Minecraft.getInstance().gameRenderer.mainRenderTarget(), this.resourcePool);
-    }
-
 }

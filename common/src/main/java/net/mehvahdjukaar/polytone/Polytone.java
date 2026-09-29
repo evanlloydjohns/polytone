@@ -107,7 +107,7 @@ public class Polytone {
             NOISES, SOUND_TYPES, BIOME_ID_MAPPERS, COLORMAPS, CUSTOM_PARTICLES, COLORS,
             BLOCK_SET, BLOCK_MODIFIERS, FLUID_MODIFIERS, CUSTOM_MODELS, ITEM_MODIFIERS, ITEM_MODELS,
             BIOME_MODIFIERS, LIGHTMAPS,
-            DIMENSION_MODIFIERS, POST_TARGETS, POST_CHAINS, SHADOWS, SHADER_EFFECTS,
+            DIMENSION_MODIFIERS,
             PARTICLE_MODIFIERS, SLOTIFY, OVERLAY_MODIFIERS, ENTITY_MODIFIERS,
             CREATIVE_TABS_MODIFIERS);
 
@@ -166,7 +166,6 @@ public class Polytone {
         ClientFrameTicker.onTick(level);
         ExpTicker.onTick(level);
         ENTITY_MODIFIERS.onTick(level);
-        POST_CHAINS.tick();
         TokenBucketTracker.tick();
     }
 

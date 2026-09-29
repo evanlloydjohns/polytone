@@ -44,9 +44,6 @@
     "FishingHookRendererMixin",
     "FluidStateModelSetMixin",
     "GameRendererMixin",
-    "GlProgramMixin",
-    "GlslCompilerMixin",
-    "RenderPassMixin",
     "GuiExtractMixin",
     "GuiGraphicsExtractorMixin",
     "GuiMixin",
@@ -80,8 +77,6 @@
     "SkyRendererMixin",
     "SmithingScreenMixin",
     "SodiumBlockRendererMixin",
-    "SodiumChunkRendererMixin",
-    "SodiumDefaultChunkRendererMixin",
     "SpatialAttributeInterpolatorMixin",
     "SpriteContentsMixin",
     "SubmitNodeStorageMixin",
@@ -93,14 +88,7 @@
     "accessor.BiomeAccessor",
     "accessor.DimensionTypeAccessor",
     "accessor.DustParticleOptionAccessor",
-    "accessor.GlBufferAccessor",
-    "accessor.LevelRendererShadowAccessor",
-    "accessor.ParticleAccessor",
-    "accessor.PostPassAccessor",
-    "accessor.GlRenderPassAccessor",
-    "accessor.VulkanRenderPassAccessor",
-    "accessor.SodiumRenderSectionManagerAccessor",
-    "accessor.SodiumWorldRendererShadowAccessor"
+    "accessor.ParticleAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

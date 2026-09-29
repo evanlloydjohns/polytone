@@ -40,25 +40,6 @@ public class LevelRendererMixin {
         if (CompatHandler.NAUTILUS && PreviewRenderTarget.current() != null) cir.setReturnValue(null);
     }
 
-    @Inject(method = "render", at = @At("HEAD"))
-    public void poly$preRender(GraphicsResourceAllocator resourceAllocator,
-                               DeltaTracker deltaTracker,
-                               boolean renderOutline,
-                               CameraRenderState cameraState,
-                               Matrix4fc modelViewMatrix,
-                               GpuBufferSlice terrainFog,
-                               Vector4f fogColor,
-                               boolean shouldRenderSky,
-                               CallbackInfo ci) {
-        // no render pass is open here, which the UBO writes below need
-        Polytone.POST_CHAINS.updateGlobalUniforms(cameraState.projectionMatrix, modelViewMatrix,
-                deltaTracker.getGameTimeDeltaTicks());
-        Polytone.SHADER_EFFECTS.updateAll();
-        // shadow map goes first so the post chains built into this frame's graph sample this frame's map
-        Polytone.SHADOWS.renderer().renderShadowPassIfNeeded(terrainFog, Minecraft.getInstance().gameRenderer.mainCamera(),
-                modelViewMatrix, cameraState.projectionMatrix);
-    }
-
     // after weather, the last world pass that depth tests
     @Inject(method = "render", at = {
             @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;addWeatherPass(Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
@@ -80,24 +61,4 @@ public class LevelRendererMixin {
                 deltaTracker.getGameTimeDeltaPartialTick(false));
     }
 
-    // 26.2: addLateDebugPass(...) was removed; inject our post passes into the frame graph right before it executes.
-    @Inject(method = "render", at = @At(value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;execute(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder$Inspector;)V",
-            shift = At.Shift.BEFORE))
-    public void poly$addPostShaders(GraphicsResourceAllocator resourceAllocator,
-                                    DeltaTracker deltaTracker,
-                                    boolean renderOutline,
-                                    CameraRenderState cameraState,
-                                    Matrix4fc modelViewMatrix,
-                                    GpuBufferSlice terrainFog,
-                                    Vector4f fogColor,
-                                    boolean shouldRenderSky,
-                                    CallbackInfo ci,
-                                    @Local FrameGraphBuilder frameGraphBuilder) {
-        // with post_chains_after_hand (default) GameRendererMixin runs the chains after the hand instead
-        if (Polytone.CONFIGS.postChainsAfterHand.get()) return;
-        RenderTarget mainTarget = Minecraft.getInstance().gameRenderer.mainRenderTarget();
-        Polytone.POST_CHAINS.addChainsToFrameGraph(mainTarget.width, mainTarget.height, this.targets, frameGraphBuilder,
-                terrainFog, this.levelRenderState.cameraRenderState);
-    }
 }

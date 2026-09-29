@@ -36,6 +36,7 @@
     "nautilus_studio": ">=${nautilus_studio_version}"
   },
   "breaks": {
+    "iris": "*",
     "sodium": "<0.9",
     "nautilus_studio": "<${nautilus_studio_version}"
   }
