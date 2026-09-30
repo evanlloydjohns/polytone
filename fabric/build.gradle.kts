@@ -2,6 +2,12 @@ plugins {
     id("com.possible-triangle.fabric")
 }
 
+// The Fabric packaging task also merges common resources. Exclude these at
+// the final JAR boundary so 26.2 shaders cannot trigger a 26.3 reload failure.
+tasks.withType<org.gradle.jvm.tasks.Jar>().configureEach {
+    exclude("assets/polytone/shaders/**")
+}
+
 fabric {
     dependOn(project(":common"))
     accessWidener(project(":common"))
