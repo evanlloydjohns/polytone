@@ -22,6 +22,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.OverlayMetadataSection;
 import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackMetadataResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackFormat;
@@ -236,7 +237,7 @@ public class ConfigsManager extends ContentManager<PolyConfig<?>> {
 
     //is this pack active or not? we dont know
     //called one pack at the time. we cant do IO there, we rely on the cache
-    public void loadCurrentPackConfigs(PackResources primary, Pack.ResourcesSupplier resources,
+    public void loadCurrentPackConfigs(PackMetadataResources primary, Pack.ResourcesSupplier resources,
                                        PackLocationInfo location, PackFormat version, PackType packType) {
         if (packType != PackType.CLIENT_RESOURCES) return;
         PackSource source = primary.location().source();
@@ -245,7 +246,16 @@ public class ConfigsManager extends ContentManager<PolyConfig<?>> {
         MapRegistry<OptionHolder<?>> activePackReg = new MapRegistry<>("Active Pack Configs");
         registerBuiltins(activePackReg);
         activeLoadConfigs.set(activePackReg);
-        parsePackConfigsInto(primary, packType, activePackReg);
+        // 26.3 opens metadata separately from full pack resources. Open the base pack
+        // without overlays to read its config before evaluating overlay conditions.
+        try (var basePacks = resources.openResources(location, new Pack.Metadata(Component.empty(),
+                PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of()))) {
+            basePacks.forEach(basePack -> {
+                try (basePack) {
+                    parsePackConfigsInto(basePack, packType, activePackReg);
+                }
+            });
+        }
 
         List<String> overlays = collectFormatOverlays(primary, packType, version);
         if (overlays.isEmpty()) return;
@@ -270,7 +280,7 @@ public class ConfigsManager extends ContentManager<PolyConfig<?>> {
         }
     }
 
-    private static List<String> collectFormatOverlays(PackResources primary, PackType packType, PackFormat version) {
+    private static List<String> collectFormatOverlays(PackMetadataResources primary, PackType packType, PackFormat version) {
         List<String> overlays = new ArrayList<>();
         try {
             OverlayMetadataSection section = primary.getMetadataSection(OverlayMetadataSection.forPackType(packType));
