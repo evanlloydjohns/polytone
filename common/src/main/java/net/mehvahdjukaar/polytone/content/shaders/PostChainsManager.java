@@ -283,13 +283,15 @@ public class PostChainsManager extends ContentManager<PostChainActivator> {
     }
 
     private void combineWorldDepthIntoMain(RenderTarget main) {
+        RenderPipeline depthCombinePipeline = PolytoneRenderTypes.DEPTH_COMBINE_PIPELINE;
+        if (depthCombinePipeline == null) return;
         GpuTextureView worldDepth = worldDepthSnapshot.getDepthTextureView();
         GpuSampler sampler = RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST);
         try (RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(
                 () -> "Polytone depth combine",
                 main.getColorTextureView(), Optional.empty(),
                 main.getDepthTextureView(), OptionalDouble.empty())) {
-            pass.setPipeline(RenderSystem.getCompiledPipeline(PolytoneRenderTypes.DEPTH_COMBINE_PIPELINE));
+            pass.setPipeline(RenderSystem.getCompiledPipeline(depthCombinePipeline));
             RenderSystem.bindDefaultUniforms(pass);
             pass.setUniform("InSampler", worldDepth, sampler);
             pass.draw(3, 1, 0, 0);

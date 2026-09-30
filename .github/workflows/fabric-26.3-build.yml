@@ -26,6 +26,18 @@ jobs:
         run: .github/scripts/bootstrap-26.2-deps.ps1
       - name: Build Fabric JAR
         run: .\gradlew.bat :fabric:build --console=plain --no-daemon
+      - name: Verify alpha excludes unported shader files
+        shell: pwsh
+        run: |
+          $jar = Get-ChildItem fabric/build/libs -Filter '*.jar' |
+            Where-Object { $_.Name -notlike '*-sources.jar' } |
+            Select-Object -First 1
+          if ($null -eq $jar) { throw 'Installable Fabric JAR was not found' }
+          $entries = & jar tf $jar.FullName
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect Fabric JAR' }
+          if ($entries | Where-Object { $_ -like 'assets/polytone/shaders/*' }) {
+            throw 'The 26.3 alpha still bundles unported Polytone shaders'
+          }
       - uses: actions/upload-artifact@v4
         if: success()
         with:

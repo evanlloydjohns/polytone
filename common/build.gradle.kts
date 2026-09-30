@@ -2,6 +2,12 @@ plugins {
     id("com.possible-triangle.common")
 }
 
+// The 26.2 shader sources are retained for the later renderer port, but must
+// not be loaded by Minecraft 26.3 in this limited alpha.
+tasks.withType<org.gradle.language.jvm.tasks.ProcessResources>().configureEach {
+    exclude("assets/polytone/shaders/**")
+}
+
 common {
     //pinned so the build doesn't need to hit maven.neoforged.net to list versions
     neoformVersion = "26.3-1"
